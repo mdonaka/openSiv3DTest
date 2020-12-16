@@ -4,7 +4,7 @@ void Ball::move() {
     m_ball.moveBy(m_ballVelocity * Scene::DeltaTime());
 }
 
-void Ball::rebound(const Rect& paddle) {
+void Ball::rebound(const Paddle& paddle) {
     // 天井にぶつかったらはね返る
     if (m_ball.y < 0 && m_ballVelocity.y < 0) {
         m_ballVelocity.y *= -1;
@@ -16,9 +16,9 @@ void Ball::rebound(const Rect& paddle) {
     }
 
     // パドルにあたったらはね返る
-    if (m_ballVelocity.y > 0 && paddle.intersects(m_ball)) {
+    if (m_ballVelocity.y > 0 && paddle.getPaddle().intersects(m_ball)) {
         // パドルの中心からの距離に応じてはね返る向きを変える
-        m_ballVelocity = Vec2((m_ball.x - paddle.center().x) * 10, -m_ballVelocity.y).setLength(m_speed);
+        m_ballVelocity = Vec2((m_ball.x - paddle.getPaddle().center().x) * 10, -m_ballVelocity.y).setLength(m_speed);
     }
 }
 
