@@ -12,7 +12,7 @@ class Ball {
     Circle m_ball;
 
 public:
-    Ball() :m_speed(480.0), m_ballVelocity(0, -m_speed), m_ball(400, 400, 8) {}
+    Ball();
 
     // ƒ{[ƒ‹‚ğˆÚ“®
     void move();

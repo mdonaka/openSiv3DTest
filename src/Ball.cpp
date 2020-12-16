@@ -1,5 +1,7 @@
 #include "Ball.hpp"
 
+Ball::Ball() : m_speed(480.0), m_ballVelocity(0, -m_speed), m_ball(400, 400, 8) {}
+
 void Ball::move() {
     m_ball.moveBy(m_ballVelocity * Scene::DeltaTime());
 }
