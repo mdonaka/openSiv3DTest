@@ -1,4 +1,5 @@
 ﻿# include <Siv3D.hpp>
+#include "./src/Ball.hpp"
 
 void Main() {
     // ブロックのサイズ
@@ -12,28 +13,22 @@ void Main() {
         blocks << Rect(p.x * blockSize.x, 60 + p.y * blockSize.y, blockSize);
     }
 
-    // ボールの速さ
-    constexpr double speed = 480.0;
-
-    // ボールの速度
-    Vec2 ballVelocity(0, -speed);
-
     // ボール
-    Circle ball(400, 400, 8);
+    auto ball = Ball();
 
     while (System::Update()) {
         // パドル
         const Rect paddle(Arg::center(Cursor::Pos().x, 500), 60, 10);
 
         // ボールを移動
-        ball.moveBy(ballVelocity * Scene::DeltaTime());
+        ball.move();
 
         // ブロックを順にチェック
         for (auto it = blocks.begin(); it != blocks.end(); ++it) {
             // ボールとブロックが交差していたら
-            if (it->intersects(ball)) {
+            if (it->intersects(ball.getBall())) {
                 // ボールの向きを反転する
-                (it->bottom().intersects(ball) || it->top().intersects(ball) ? ballVelocity.y : ballVelocity.x) *= -1;
+                (it->bottom().intersects(ball.getBall()) || it->top().intersects(ball.getBall()) ? ball.getBallVelocity().y : ball.getBallVelocity().x) *= -1;
 
                 // ブロックを配列から削除（イテレータが無効になるので注意）
                 blocks.erase(it);
@@ -43,21 +38,8 @@ void Main() {
             }
         }
 
-        // 天井にぶつかったらはね返る
-        if (ball.y < 0 && ballVelocity.y < 0) {
-            ballVelocity.y *= -1;
-        }
-
-        // 左右の壁にぶつかったらはね返る
-        if ((ball.x < 0 && ballVelocity.x < 0) || (Scene::Width() < ball.x && ballVelocity.x > 0)) {
-            ballVelocity.x *= -1;
-        }
-
-        // パドルにあたったらはね返る
-        if (ballVelocity.y > 0 && paddle.intersects(ball)) {
-            // パドルの中心からの距離に応じてはね返る向きを変える
-            ballVelocity = Vec2((ball.x - paddle.center().x) * 10, -ballVelocity.y).setLength(speed);
-        }
+        // ボールを跳ね返す
+        ball.rebound(paddle);
 
         // すべてのブロックを描画する
         for (const auto& block : blocks) {
