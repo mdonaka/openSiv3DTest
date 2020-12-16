@@ -1,5 +1,6 @@
 #pragma once
 # include <Siv3D.hpp>
+#include "./Paddle.hpp"
 
 class Ball {
 
@@ -17,7 +18,7 @@ public:
     void move();
 
     // ’µ‚Ë•Ô‚é
-    void rebound(const Rect& paddle);
+    void rebound(const Paddle& paddle);
 
     // •`‰æ‚·‚é
     void draw()const;

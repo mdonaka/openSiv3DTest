@@ -1,5 +1,6 @@
 ﻿# include <Siv3D.hpp>
 #include "./src/Ball.hpp"
+#include "./src/Paddle.hpp"
 
 void Main() {
     // ブロックのサイズ
@@ -18,7 +19,7 @@ void Main() {
 
     while (System::Update()) {
         // パドル
-        const Rect paddle(Arg::center(Cursor::Pos().x, 500), 60, 10);
+        const Paddle paddle;
 
         // ボールを移動
         ball.move();
