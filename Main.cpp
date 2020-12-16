@@ -13,7 +13,7 @@ void Main() {
 
     while (System::Update()) {
         // パドル
-        const Paddle paddle;
+        const auto paddle = Paddle();
 
         // ボールを移動
         ball.move();
