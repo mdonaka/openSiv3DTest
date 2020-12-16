@@ -1,6 +1,7 @@
 #pragma once
 #include <Siv3D.hpp>
 #include "./Ball.hpp"
+#include "./Block.hpp"
 
 class Blocks {
 
@@ -8,7 +9,7 @@ class Blocks {
     const Size m_blockSize;
 
     // ƒuƒƒbƒN‚Ì—ñ
-    Array<Rect> m_blocks;
+    Array<Block> m_blocks;
 
 public:
     Blocks();
