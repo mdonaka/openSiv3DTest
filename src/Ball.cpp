@@ -24,14 +24,18 @@ void Ball::rebound(const Paddle& paddle) {
     }
 }
 
+void Ball::rebound(const Block& block) {
+    if (block.intersectsTopBottom(m_ball)) {
+        m_ballVelocity.y *= -1;
+    } else {
+        m_ballVelocity.x *= -1;
+    }
+}
+
 void Ball::draw() const {
     m_ball.draw();
 }
 
-Circle Ball::getBall() const {
+Circle Ball::getBall() const{
     return m_ball;
-}
-
-Vec2& Ball::getBallVelocity() {
-    return m_ballVelocity;
 }

@@ -1,6 +1,7 @@
 #pragma once
 # include <Siv3D.hpp>
 #include "./Paddle.hpp"
+#include "./Block.hpp"
 
 class Ball {
 
@@ -19,14 +20,11 @@ public:
 
     // 跳ね返る
     void rebound(const Paddle& paddle);
+    void rebound(const Block& block);
 
     // 描画する
     void draw()const;
 
-    // ボールを返す
-    Circle getBall()const;
-
-    // ボールの速さを"参照で"返す
-    Vec2& getBallVelocity();
+    Circle getBall() const;
 };
 

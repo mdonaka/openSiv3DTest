@@ -7,20 +7,22 @@ Blocks::Blocks() :m_blockSize(40, 20) {
     }
 }
 
-void Blocks::intersectsBlock(Ball& ball) {
+std::optional<Block> Blocks::getIntersectsBlock(Ball& ball) {
 
     // ブロックを順にチェック
     for (auto it = m_blocks.begin(); it != m_blocks.end(); ++it) {
         // ボールとブロックが交差していたら
-        if (it->intersectsBall(ball)) {
+        if (it->intersects(ball.getBall())) {
 
-            // ブロックを配列から削除（イテレータが無効になるので注意）
+            auto block = *it;
+
+            // ブロックを配列から削除
             m_blocks.erase(it);
 
-            // これ以上チェックしない  
-            break;
+            return block;
         }
     }
+    return std::nullopt;
 }
 
 void Blocks::draw() const {

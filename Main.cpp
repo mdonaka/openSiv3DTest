@@ -19,7 +19,9 @@ void Main() {
         ball.move();
 
         // ブロックとボールの当たりを判定
-        blocks.intersectsBlock(ball);
+        if (auto block = blocks.getIntersectsBlock(ball); block) {
+            ball.rebound(block.value());
+        }
 
         // ボールを跳ね返す
         ball.rebound(paddle);

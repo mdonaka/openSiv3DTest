@@ -1,5 +1,6 @@
 #pragma once
 #include <Siv3D.hpp>
+#include <optional>
 #include "./Ball.hpp"
 #include "./Block.hpp"
 
@@ -13,11 +14,12 @@ class Blocks {
 
 public:
     Blocks();
-    
-    // 各ブロックとボールの当たりを判定
-    void intersectsBlock(Ball& ball);
+
+    // ボールと当たっているブロックを返す
+    std::optional<Block> getIntersectsBlock(Ball& ball);
 
     // 描画
     void draw()const;
+
 };
 
